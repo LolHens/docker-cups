@@ -13,7 +13,8 @@ CMD ["/sbin/my_init"]
 ##         RUN INSTALL SCRIPT          ##
 #########################################
 ADD ./files /files
-RUN sync && /bin/bash /files/tmp/install.sh
+RUN chmod +x /files/tmp/install.sh \
+ && /bin/bash /files/tmp/install.sh
 
 #########################################
 ##         EXPORTS AND VOLUMES         ##
