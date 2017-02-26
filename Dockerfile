@@ -13,9 +13,10 @@ CMD ["/sbin/my_init"]
 ##         RUN INSTALL SCRIPT          ##
 #########################################
 ADD ./files /files
-RUN chmod +x /files/tmp/install.sh
+RUN ls /
 RUN ls /files
 RUN ls /files/tmp
+RUN chmod +x /files/tmp/install.sh
 RUN /bin/bash /files/tmp/install.sh
 
 #########################################
