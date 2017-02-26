@@ -14,11 +14,12 @@ RUN export DEBIAN_FRONTEND="noninteractive" \
  && usermod -d /home nobody \
  && chown -R nobody:users /home
 
-RUN curl -skL http://www.bchemnet.com/suldr/pool/debian/extra/su/suldr-keyring_2_all.deb -o /tmp/suldr-keyring.deb \
+RUN echo "deb http://ftp.debian.org/debian jessie-backports main" >> /etc/apt/sources.list \
+ && curl -skL http://www.bchemnet.com/suldr/pool/debian/extra/su/suldr-keyring_2_all.deb -o /tmp/suldr-keyring.deb \
  && dpkg -i /tmp/suldr-keyring.deb \
  && echo "deb http://www.bchemnet.com/suldr/ debian extra" >> /etc/apt/sources.list.d/bchemnet.list \
  && apt-get update \
- && apt-get install -y \
+ && apt-get -t jessie-backports install -y \
       cups \
       cups-pdf \
       whois \
@@ -40,6 +41,9 @@ RUN cd /files && find . -type f -exec cp -f --parents '{}' / \; \
  && mv /usr/lib/cups/backend/serial /usr/lib/cups/backend-available/ \
  && sed -i "s|#enable-dbus.*|enable-dbus=no|g" /etc/avahi/avahi-daemon.conf
 
+RUN cleanimage
+
 
 VOLUME /config /etc/cups/ /var/log/cups /var/spool/cups /var/cache/cups
+
 EXPOSE 631
