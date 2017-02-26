@@ -15,6 +15,7 @@ CMD ["/sbin/my_init"]
 ADD ./files /files
 RUN chmod +x /files/tmp/install.sh \
  && ls /files \
+ && ls /files/tmp \
  && /bin/bash /files/tmp/install.sh
 
 #########################################
