@@ -25,9 +25,11 @@ ENV CANON_DRIVER_URL http://gdlp01.c-wss.com/gds/0/0100005170/01/$CANON_DRIVER_F
 RUN cd "/tmp" \
  && curl -LO $CANON_DRIVER_URL \
  && tar -xf $CANON_DRIVER_FILE \
- && $CANON_DRIVER_NAME/install.sh
+ && (dpkg -i $CANON_DRIVER_NAME/packages/cnijfilter-common_3.90-1_amd64.deb 2>&1 || true) \
+ && (dpkg -i $CANON_DRIVER_NAME/packages/cnijfilter-mx920series_3.90-1_amd64.deb 2>&1 || true) \
+ && apt-get -yf install
 
-RUN cleanimage
+RUN echo cleanimage
 
 
 CMD /sbin/my_init
