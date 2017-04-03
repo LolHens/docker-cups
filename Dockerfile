@@ -16,6 +16,7 @@ RUN apt-get update \
 RUN apt-get remove -y \
       libcups2 \
  && apt-get install -y \
+      cups \
       libcups2-dev \
       libffi-dev \
       libssl-dev \
@@ -42,7 +43,7 @@ RUN cd "/tmp" \
  && apt-get -yf install
 
 
-RUN echo cleanimage
+RUN cleanimage
 
 
 CMD /sbin/my_init
