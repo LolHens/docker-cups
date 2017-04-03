@@ -16,7 +16,10 @@ RUN apt-get update \
 RUN apt-get remove -y \
       libcups2 \
  && apt-get install -y \
+      libcups2-dev \
+      libffi-dev \
       libssl-dev \
+      python-dev \
  && printf 'if 1:\n\
       import pip\n\
       from subprocess import call\n\
