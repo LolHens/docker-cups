@@ -7,19 +7,17 @@ RUN chmod +x "/usr/local/bin/cleanimage"
 
 RUN apt-get update \
  && apt-get upgrade -y \
+ && apt-get remove -y \
+      libcups2 \
  && apt-get install -y \
       apt-transport-https \
       ca-certificates \
-      curl \
-      nano
-
-RUN apt-get remove -y \
-      libcups2 \
- && apt-get install -y \
       cups \
+      curl \
       libcups2-dev \
       libffi-dev \
       libssl-dev \
+      nano \
       python-dev \
  && printf 'if 1:\n\
       import pip\n\
