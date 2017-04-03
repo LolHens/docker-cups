@@ -13,6 +13,18 @@ RUN apt-get update \
       curl \
       nano
 
+RUN apt-get remove -y \
+      libcups2 \
+ && apt-get install -y \
+      libssl-dev \
+ && printf 'if 1:\n\
+      import pip\n\
+      from subprocess import call\n\
+      \n\
+      for dist in pip.get_installed_distributions():\n\
+          call("pip install --upgrade " + dist.project_name, shell=True)\n\
+    ' | python
+
 
 ENV CANON_DRIVER_VERSION 3.90-1
 ENV CANON_DRIVER_NAME cnijfilter-mx920series-$CANON_DRIVER_VERSION-deb
@@ -24,8 +36,10 @@ RUN cd "/tmp" \
  && tar -xf $CANON_DRIVER_FILE \
  && (dpkg -i $CANON_DRIVER_NAME/packages/cnijfilter-common_3.90-1_amd64.deb 2>&1 || true) \
  && (dpkg -i $CANON_DRIVER_NAME/packages/cnijfilter-mx920series_3.90-1_amd64.deb 2>&1 || true) \
- && apt-get -yf install \
- && echo cleanimage
+ && apt-get -yf install
+
+
+RUN echo cleanimage
 
 
 CMD /sbin/my_init
